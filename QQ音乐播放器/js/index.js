@@ -1,5 +1,5 @@
 $(function () {
-    //0、自定义滚动条
+    //0、利用基于jQuery的插件CustomScrollbar，自定义滚动条样式
     $(".content_list").mCustomScrollbar();
 
     var $audio = $("audio");

@@ -62,8 +62,8 @@
                 var duration = $this.audio.duration;
                 var currentTime = $this.audio.currentTime;
                 var timeStr = $this.formatDate(currentTime, duration);
-                // return只能返回一个值
-                callBack(currentTime,duration,timeStr);
+                // return返回给当前这一层函数，我们需要将值返回给外层函数
+                callBack(currentTime, duration, timeStr);
             });
         },
         formatDate: function (currentTime, duration) {
@@ -85,6 +85,16 @@
                 startSec = "0" + startSec;
             }
             return startMin + ":" + startSec + " / " + endMin + ":" + endSec;
+        },
+        musicSeekTo: function (value) {
+            if (isNaN(value)) return;
+            this.audio.currentTime = this.audio.duration * value;
+        },
+        musicVoiceSeekTo: function (value) {
+            if (isNaN(value)) return;
+            if (value < 0 || value > 1) return;
+            //原生的声音大小的属性，取值为0-1
+            this.audio.volume = value;
         }
 
     }

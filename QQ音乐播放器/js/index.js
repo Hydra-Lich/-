@@ -4,12 +4,9 @@ $(function () {
 
     var $audio = $("audio");
     var player = new Player($audio);
-    var $progressBar = $(".music_progress_bar");
-    var $progressLine = $(".music_progress_line");
-    var $progressDot = $(".music_progress_dot");
-    var progress = Progress($progressBar, $progressLine, $progressDot);
-    progress.progressClick();
-    progress.progressMove();
+    var progress;
+    var voiceProgress;
+    var lyric;
     //1、加载歌曲列表
     getPlayList();
     function getPlayList() {
@@ -25,6 +22,7 @@ $(function () {
                     $musicList.append($item);
                 })
                 initMusicInfo(data[0]);
+                initMusicLyric(data[0]);
             },
             error: function (e) {
                 console.log(e)
@@ -53,6 +51,47 @@ $(function () {
         $musicProgressTime.text("00:00 / " + music.time);
         $musicBg.css("background", "url(" + music.cover + ")");
     }
+    //3.初始化歌词信息
+    function initMusicLyric(music) {
+        lyric = new Lyric(music.link_lrc);
+        var $lryicContainer = $(".song_lyric");
+        //清空上一首音乐的格式
+        $lryicContainer.html("");
+        lyric.loadLyric(function () {
+            //创建歌词列表
+            $.each(lyric.lyrics, function (index, ele) {
+                var $item = $("<li>" + ele + "</li>");
+                $lryicContainer.append($item);
+            });
+        });
+    }
+    //3.初始化进度条
+    initProgress();
+    function initProgress() {
+        var $progressBar = $(".music_progress_bar");
+        var $progressLine = $(".music_progress_line");
+        var $progressDot = $(".music_progress_dot");
+        progress = Progress($progressBar, $progressLine, $progressDot);
+        progress.progressClick(function (value) {
+            player.musicSeekTo(value);
+        });
+        progress.progressMove(function (value) {
+            player.musicSeekTo(value);
+        });
+
+
+        var $voiceBar = $(".music_voice_bar");
+        var $voiceLine = $(".music_voice_line");
+        var $voiceDot = $(".music_voice_dot");
+        voiceProgress = Progress($voiceBar, $voiceLine, $voiceDot);
+        voiceProgress.progressClick(function (value) {
+            player.musicVoiceSeekTo(value);
+        });
+        voiceProgress.progressMove(function (value) {
+            player.musicVoiceSeekTo(value);
+        });
+    }
+
     //2.初始化时间监听
     initEvents();
     function initEvents() {
@@ -109,6 +148,8 @@ $(function () {
 
             //3.6切换歌曲信息
             initMusicInfo($item.get(0).music);
+            //3.7切换歌词信息
+            initMusicLyric($item.get(0).music);
         });
 
         //4.监听底部控制区域播放按钮的点击
@@ -160,6 +201,30 @@ $(function () {
             //计算播放的比例
             var value = currentTime / duration * 100;
             progress.setProgress(value);
+            //实现歌词同步
+            var index = lyric.currentIndex(currentTime);
+            var $item = $(".song_lyric li").eq(index);
+            $item.addClass("cur");
+            $item.siblings().removeClass("cur");
+
+            if (index <= 2) return;
+            $(".song_lyric").css({
+                marginTop: ((-index+2) * 30),
+            });
+        });
+
+        //9.监听声音按钮的点击
+        $(".music_voice_icon").click(function () {
+            //图标切换
+            $(this).toggleClass("music_voice_icon2");
+            //声音切换
+            if ($(this).attr("class").indexOf("music_voice_icon2") != -1) {
+                // 变为没有声音
+                player.musicVoiceSeekTo(0);
+            } else {
+                //有声音
+                player.musicVoiceSeekTo(1);
+            }
         });
     }
 

@@ -11,7 +11,7 @@
         },
         currentIndex: -1,
         playMusic: function (index, music) {
-            //判断是否是同一首音乐
+            //判断与当前播放的音乐是否是同一首音乐
             if (this.currentIndex == index) {
                 //同一首音乐
                 if (this.audio.paused) {
@@ -20,7 +20,7 @@
                     this.audio.pause();//原生的暂停音频
                 }
             } else {
-                //不是同一首歌
+                //不是同一首音乐
                 this.$audio.attr("src", music.link_url);
                 this.audio.play();
                 this.currentIndex = index;
@@ -43,7 +43,7 @@
         changeMusic: function (index) {
             //删除对应的数据
             this.musicList.splice(index, 1);
-            //判断当前删除的歌曲是否是当前播放歌曲的前面
+            //判断当前删除的歌曲是否是当前播放歌曲的前面的歌曲
             if (index < this.currentIndex) {
                 this.currentIndex = this.currentIndex - 1;
             }
@@ -96,7 +96,6 @@
             //原生的声音大小的属性，取值为0-1
             this.audio.volume = value;
         }
-
     }
     Player.prototype.init.prototype = Player.prototype;
     window.Player = Player;

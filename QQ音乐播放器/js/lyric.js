@@ -30,7 +30,7 @@
         parseLyric: function (data) {
             var $this = this;
             var array = data.split("\n");
-            var timeReg = /\[(\d*:\d*\.\d*)\]/
+            var timeReg = /\[(\d*:\d*\.\d*)\]/ //匹配该类型字符串[00:00.92]，括号内的元素会作为一个数组的第二个元素返回
             //遍历取出每一条歌词
             $.each(array, function (index, ele) {
                 //处理歌词
@@ -38,7 +38,7 @@
                 if (lrc.length == 1) return true;
                 $this.lyrics.push(lrc);
 
-                var res = timeReg.exec(ele);
+                var res = timeReg.exec(ele); //返回匹配的结果，返回一个数组
                 if (res == null) return true;
                 var timerStr = res[1];
                 var res2 = timerStr.split(":");

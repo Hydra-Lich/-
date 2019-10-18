@@ -93,8 +93,7 @@ html, body {
     height: 18px;
     background: url(../images/icon_sprite.png) no-repeat 0 0;
     margin-right: 10px;
-    /* vertical-align: 可设置数字进行元素垂直方向上的微调 */
-    vertical-align: -5px;
+    vertical-align: -5px; /* vertical-align: 行内元素设置数字进行元素垂直方向上的微调 */
 }
 
 .content_toolbar span:nth-child(1) i {
@@ -120,8 +119,7 @@ html, body {
 .content_left .content_list {
     width: 100%;
     height: 420px;
-    /* 音乐列表的滚动条 */
-    overflow: auto;
+    overflow: auto; /* 设置为auto后，超出div的内容可以通过滚动条来查看 */
 }
 
 .content_list li {
@@ -129,22 +127,17 @@ html, body {
     width: 100%;
     height: 50px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-    /* 设置边框后为了让盒子不被撑大，添加box-sizing: border-box样式 */
-    box-sizing: border-box;
-    /* 设置使用者不能进行选中赋值 */
-    user-select: none;
+    box-sizing: border-box; /* 设置边框后为了让盒子不被撑大，添加box-sizing: border-box样式变为ie盒模型，这样设置的宽高是border、padding、content总和 */
+    user-select: none; /* 该属性让文字不能用鼠标进行选中 */
 }
 
 .content_list li div {
     float: left;
     color: rgba(255, 255, 255, 0.5);
     line-height: 50px;
-    /* opacity: 0.5; */
 }
 
-/* 为什么要单独设置checkbox样式，因为默认的样式太丑且不能进行修改 */
-
-.content_list li .list_check {
+.content_list li .list_check { /* 单独设置checkbox样式，因为默认的样式太丑且不能进行修改 */
     width: 50px;
     height: 100%;
     text-align: center;
@@ -496,30 +489,24 @@ html, body {
     position: absolute;
     left: 0;
     top: 0;
-    /* 将图片放到最底层作为背景 */
-    z-index: -2;
+    z-index: -2; /* 将图片放到最底层作为背景，数字越小层级越低 */
     width: 100%;
     height: 100%;
     background: url(../images/lnj.jpg) no-repeat 0 0;
-    /* 设置背景图片覆盖 */
-    background-size: cover;
-    /* 设置背景模糊效果 */
-    filter: blur(100px);
+    background-size: cover; /* 设置背景图片覆盖全屏 */
+    filter: blur(100px); /* 设置背景模糊效果，数字越大模糊效果越好 */
 }
 
 .mask {
     position: absolute;
     left: 0;
     top: 0;
-    /* 该遮罩显示在最底层的背景图片的前面 设为-1 */
-    z-index: -1;
+    z-index: -1; /* 该遮罩显示在最底层的背景图片的上一层 设为-1 */
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.35);
 }
 
-/* 设置滚动条的样式宽度 */
-
-._mCS_1 .mCSB_scrollTools .mCSB_dragger_bar {
+._mCS_1 .mCSB_scrollTools .mCSB_dragger_bar { /* 设置滚动条的样式宽度 */
     width: 8px;
 }

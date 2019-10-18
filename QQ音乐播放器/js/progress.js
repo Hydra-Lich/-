@@ -14,7 +14,7 @@
             var $this = this;//此时此刻的this是progress
             //监听背景的点击
             this.$progressBar.click(function (event) {
-                // 这个方法里的this指$progressBar,需要拿到外面的数据,必须先保存外部的this
+                // 这个方法里的this指$progressBar,需要拿到外面progress对象的数据,必须先保存外部的this
                 // 获取背景距离窗口默认的位置
                 var normalLeft = $(this).offset().left;
                 // 获取点击的位置距离窗口的位置

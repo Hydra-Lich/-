@@ -1,5 +1,5 @@
 $(function () {
-    //0、利用基于jQuery的插件CustomScrollbar，自定义滚动条样式
+    //0.利用基于jQuery的插件CustomScrollbar，进行滚动条样式的
     $(".content_list").mCustomScrollbar();
 
     var $audio = $("audio");
@@ -7,7 +7,7 @@ $(function () {
     var progress;
     var voiceProgress;
     var lyric;
-    //1、加载歌曲列表
+    //1.加载歌曲列表
     getPlayList();
     function getPlayList() {
         $.ajax({
@@ -51,6 +51,7 @@ $(function () {
         $musicProgressTime.text("00:00 / " + music.time);
         $musicBg.css("background", "url(" + music.cover + ")");
     }
+
     //3.初始化歌词信息
     function initMusicLyric(music) {
         lyric = new Lyric(music.link_lrc);
@@ -65,7 +66,8 @@ $(function () {
             });
         });
     }
-    //3.初始化进度条
+
+    //4.初始化进度条
     initProgress();
     function initProgress() {
         var $progressBar = $(".music_progress_bar");
@@ -92,10 +94,10 @@ $(function () {
         });
     }
 
-    //2.初始化时间监听
+    //5.初始化所有事件的监听
     initEvents();
     function initEvents() {
-        //1、事件委托监听歌曲的移入移出事件
+        //1.事件委托监听歌曲列表中鼠标移入移出事件
         $(".content_list").delegate(".list_music", "mouseenter", function () {
             // 移入显示子菜单，隐藏时长
             $(this).find(".list_time span").stop().fadeOut(100);
@@ -109,23 +111,21 @@ $(function () {
             $(this).find(".list_time a").stop().fadeOut(100);
         });
 
-
-        //2、事件委托监听复选框的点击事件
+        //2.事件委托监听歌曲列表中复选框的点击事件
         $(".content_list").delegate(".list_check", "click", function () {
             $(this).toggleClass("list_checked");
         });
 
-
-        //3、添加子菜单播放按钮的监听
+        //3.事件委托监听歌曲列表中子菜单播放按钮的监听
         var $musicPlay = $(".music_play");
         $(".content_list").delegate(".list_menu_play", "click", function () {
             var $item = $(this).parents(".list_music");
-            // console.log($item.get(0).index)
-            // console.log($item.get(0).music);
-            //3.1切换播放的图标
+            //3.1子菜单播放按钮切换播放的图标
             $(this).toggleClass("list_menu_play2");
-            //3.2复原其他的播放图标
+           
+            //3.2子菜单中复原其他的播放图标
             $item.siblings().find(".list_menu_play").removeClass("list_menu_play2");
+            
             //3.3同步底部播放按钮
             if ($(this).attr("class").indexOf("list_menu_play2") != -1) {
                 //当前子菜单的播放按钮是播放状态
@@ -139,7 +139,8 @@ $(function () {
                 // 让文字不高亮显示
                 $item.find("div").css("color", "rgba(255,255,255,0.5)");
             }
-            //3.4切换序号的状态
+            
+            //3.4歌曲列表中切换序号的状态
             $item.find(".list_number").toggleClass("list_number2");
             $item.siblings().find(".list_number").removeClass("list_number2");
 
@@ -148,6 +149,7 @@ $(function () {
 
             //3.6切换歌曲信息
             initMusicInfo($item.get(0).music);
+            
             //3.7切换歌词信息
             initMusicLyric($item.get(0).music);
         });
@@ -164,22 +166,25 @@ $(function () {
 
             }
         });
+
         //5.监听底部控制区域上一首按钮的点击
         $(".music_pre").click(function () {
             $(".list_music").eq(player.preIndex()).find(".list_menu_play").trigger("click");
 
         });
+
         //6.监听底部控制区域下一首按钮的点击
         $(".music_next").click(function () {
             $(".list_music").eq(player.nextIndex()).find(".list_menu_play").trigger("click");
 
         });
+
         //7.事件委托监听删除按钮的点击
         $(".content_list").delegate(".list_menu_del", "click", function () {
             //找到被点击的音乐
             var $item = $(this).parents(".list_music");
 
-            //判断当前删除的是否是正在播放的
+            //判断当前删除的歌曲是否正在播放，删除后播放下一首
             if ($item.get(0).index == player.currentIndex) {
                 $(".music_next").trigger("click");
             }
@@ -187,12 +192,13 @@ $(function () {
             $item.remove();
             player.changeMusic($item.get(0).index);
 
-            //重新排序
+            //重新对歌曲列表进行排序
             $(".list_music").each(function (index, ele) {
-                ele.index = index;
+                ele.index = index; //ele是原生的li对象
                 $(ele).find(".list_number").text(index + 1);
             });
         })
+
         //8.监听播放的进度
         player.musicTimerUpdate(function (currentTime, duration, timeStr) {
             //同步时间
@@ -228,7 +234,7 @@ $(function () {
         });
     }
 
-    //定义一个方法创建一条音乐
+    //定义一个方法用于音乐列表中添加一条音乐的信息
     function creatMusicItem(index, music) {
         var $item = $("" +
             "<li class=\"list_music\">\n" +
@@ -253,10 +259,5 @@ $(function () {
         $item.get(0).index = index;
         $item.get(0).music = music;
         return $item;
-    }
-
-    //定义一个格式化时间的方法
-    function formatDate(currentTime, duration) {
-
     }
 });

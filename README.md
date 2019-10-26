@@ -12,4 +12,4 @@
 * 项目内还存在很多BUG未修复，只实现了其中一部分功能
 #### vue项目“TodoList”
 * Vue、Webpack、Stylus、Package.json中的各类Loader和Plugin
-* 用vue框架搭建一个TodoList应用，可用于记录待做时间，完成事件后可进行横线划除或删除操作。项目主要使用vue+vebpack，对应用进行了组件化处理，涉及到vue的基础使用，父子组件之间的数据交互，webpack对前端工程的配置， webpack-dev-server用于模拟服务器运行情况，进行调试。该项目对于前端项目构建和Vue基本使用有很大的帮助
+* 用vue框架搭建一个TodoList应用，可用于记录待做时间，完成事件后可进行横线划除或删除操作。项目主要使用vue+webpack，对应用进行了组件化处理，涉及到vue的基础使用，父子组件之间的数据交互，webpack对前端工程的配置， webpack-dev-server用于模拟服务器运行情况，进行调试。该项目对于前端项目构建和Vue基本使用有很大的帮助

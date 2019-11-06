@@ -17,7 +17,7 @@ var router = new VueRouter({
         { path: '/search', component: SearchContainer },
         { path: '/home/newlist', component: NewsList },
         //:id应为v-for渲染时采用的是item.id是一个变量,所以用:id进行匹配
-        { path: '/home/newsIfon/:id', component: NewsInfo }
+        { path: '/home/newsinfo/:id', component: NewsInfo }
 
     ],
     //覆盖默认路由高亮的类，默认的类叫做router-link-active

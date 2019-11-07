@@ -3,7 +3,7 @@
     <!-- 轮播图区域 -->
     <mt-swipe :auto="4000">
       <!-- 在组件中使用v-for循环的话需要使用key -->
-      <mt-swipe-item v-for="item in lunbotuList" :key="item.url">
+      <mt-swipe-item v-for="item in lunbotuList" :key="item.img">
         <!-- 加上v-bind使src里的字符识别为变量 -->
         <img :src="item.img" alt />
       </mt-swipe-item>
@@ -57,11 +57,11 @@ import { Toast } from "mint-ui";
 export default {
   data() {
     return {
-      lunbotuList: ['测试一','测试二'] //v-for需要从data中进行循环，设置一个数组用于保存轮播图的数据
+      lunbotuList: [] //v-for需要从data中进行循环，设置一个数组用于保存轮播图的数据
     };
   },
   created() {
-    // this.getSwipe();
+    this.getSwipe();
   },
   methods: {
     getSwipe() {
@@ -81,8 +81,8 @@ export default {
 
 <style lang="scss" scoped>
 .mint-swipe {
-  height: 200px;
-
+  height: 300px;
+  width: 100%;
   .mint-swipe-item {
     &:nth-child(1) {
       background-color: rebeccapurple;

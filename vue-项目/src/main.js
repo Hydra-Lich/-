@@ -14,7 +14,7 @@ Vue.filter('dateFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 // 设置请求的根路径
-Vue.http.options.root='"http://vue.studyit.io'
+Vue.http.options.root="https://www.easy-mock.com/mock/5dc2c979678bf1201817c79e/vue.studyit.io"
 //全局设置post时候表单数据格式组织形式 application/x-www-form-urlenconded
 Vue.http.options.emulateJSON=true;
 
